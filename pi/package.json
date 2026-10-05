@@ -1,0 +1,39 @@
+{
+  "name": "@trackxai/pi",
+  "version": "0.1.0",
+  "description": "Track work in trackxai from Pi: the trackxai tools, the tracking playbook and a skill.",
+  "keywords": [
+    "pi-package",
+    "trackxai"
+  ],
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalebteccom/trackxai-plugins.git",
+    "directory": "pi"
+  },
+  "homepage": "https://github.com/kalebteccom/trackxai-plugins",
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "files": [
+    "extensions",
+    "skills",
+    "prompt",
+    "guidance.sha256",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/trackxai/index.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0"
+  }
+}

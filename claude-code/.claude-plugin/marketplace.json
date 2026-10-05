@@ -1,0 +1,15 @@
+{
+  "name": "trackxai",
+  "description": "trackxai plugins for Claude Code.",
+  "owner": {
+    "name": "Kalebtec",
+    "url": "https://kalebtec.com"
+  },
+  "plugins": [
+    {
+      "name": "trackxai",
+      "source": ".",
+      "description": "Track work in trackxai: claim, progress and complete tasks, record evidence, and write tasks and questions a person can act on."
+    }
+  ]
+}

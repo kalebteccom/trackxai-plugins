@@ -1,0 +1,31 @@
+{
+  "name": "@trackxai/opencode",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalebteccom/trackxai-plugins.git",
+    "directory": "opencode"
+  },
+  "homepage": "https://github.com/kalebteccom/trackxai-plugins",
+  "description": "Track projects and tasks in trackxai from OpenCode.",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "instructions.md",
+    "opencode-block.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "trackxai",
+    "mcp"
+  ],
+  "dependencies": {
+    "@trackxai/agent-plugins": "0.1.0"
+  }
+}

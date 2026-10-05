@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "trackxai",
+  "version": "0.1.0",
+  "description": "Track projects and tasks in trackxai.",
+  "keywords": [
+    "trackxai",
+    "tasks",
+    "planning"
+  ],
+  "extensions": {
+    "trackxai": {
+      "private": true,
+      "license": "MIT",
+      "harness": "hermes",
+      "profileDirEnv": "HERMES_HOME",
+      "profileDirDefault": ".hermes"
+    }
+  }
+}

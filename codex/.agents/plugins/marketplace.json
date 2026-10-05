@@ -1,0 +1,20 @@
+{
+  "name": "trackxai",
+  "interface": {
+    "displayName": "trackxai"
+  },
+  "plugins": [
+    {
+      "name": "trackxai",
+      "source": {
+        "source": "local",
+        "path": "./trackxai"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

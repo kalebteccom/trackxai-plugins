@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "trackxai": {
+      "type": "http",
+      "url": "https://trackxai.kalebtec.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions: {} # each job asks for what it needs
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    # The environment has a required reviewer and is the one each package's trusted publisher names.
+    environment: npm-publish
+    permissions:
+      contents: read # checkout
+      id-token: write # the OIDC login npm trusted publishing and provenance use
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # every branch, so origin/main can be compared with the tag
+      - name: Require a tag on main that names the version
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+          TAG_COMMIT: ${{ github.sha }}
+        run: |
+          version=$(node -p "require('./agent-plugins/package.json').version")
+          if [ "$TAG_NAME" != "v$version" ]; then
+            echo "the tag $TAG_NAME does not name version $version" >&2
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" origin/main; then
+            echo "the tagged commit is not an ancestor of origin/main, so nothing is published" >&2
+            exit 1
+          fi
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+          registry-url: https://registry.npmjs.org
+      - name: Require an npm that supports trusted publishing
+        run: node -e 'const [a,b,c]=process.argv[1].split(".").map(Number);if(a<11||(a===11&&(b<5||(b===5&&c<1))))process.exit(1)' "$(npm --version)"
+      - name: Publish each package that is not on the registry yet
+        run: |
+          for dir in agent-plugins pi opencode; do
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            if npm view "$name@$version" version > /dev/null 2>&1; then
+              echo "$name@$version is already on the registry"
+              continue
+            fi
+            node -e "const f='./$dir/package.json',p=require(f);delete p.private;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\\n')"
+            npm publish "./$dir" --access public --provenance --ignore-scripts
+          done

@@ -1,0 +1,97 @@
+---
+name: trackxai
+description: Track work in trackxai. Use when claiming, progressing, completing or filing tasks, epics, gaps and questions through the trackxai tools, or when deciding how to lay work out in a workspace.
+---
+
+Plugin version: 0.1.0
+
+## Writing a task a person can act on
+
+The title is the outcome, as an imperative: "Reject an importer row with no legacy identifier",
+never "Importer rows". If nobody can tell from the title when it is done, it names a topic.
+
+The goal says what is true once the work is done, in terms a reader could check without you.
+Out-of-scope says what a reader would otherwise assume is included, so nobody builds it. Notes
+carry what you learned on the way; they are not the goal restated.
+
+Link, do not narrate. Every relation the schema can hold goes in as a reference rather than a
+sentence: an issue is a sources reference with its system, its number and its URL, never "#417"
+in the title; a dependency is a blocked-by reference, never "waits on the mapper rewrite" in
+the notes; another task is a reference to it, never its identifier pasted into prose; a file
+you touch is an entry in files with its symbol, never a path quoted in a criterion. Prose is
+read by a person once. A reference is read by every query, every view and every agent after
+you, and it is checked on the way in.
+
+An acceptance criterion is one observable a stranger can verify: a command that exits, a
+response that carries a value, a file that exists, a count that holds. At least one names the
+command, the path or the number. "Works correctly" is not a criterion.
+
+Resolve facts before you write. Read the code, the schema, the runbook and the earlier tasks;
+never ask what the repository can tell you. What remains after that goes in as a gap, classified
+and routed, and the task proceeds on a stated assumption.
+
+One task is one unit of work. Two mutually exclusive approaches inside one task are an open
+question that has not been asked yet.
+
+## Writing a question that stands alone
+
+The person answering will read your question in a list beside forty others, on a phone, without
+the task open and without the paragraph you wrote it under. Write it so that list is enough.
+
+Name the referent. "Is this the right column?" cannot be answered from the list. "Does the
+legacy importer read legacy_id or legacy_ref for the client reference?" can. No it, this, that,
+they or those as the subject.
+
+State what you already know and what you checked, in one clause, so the answerer does not
+repeat your lookup and does not have to trust you blindly: "the 2019 export has both columns
+and the mapper reads legacy_id".
+
+Offer the options or a default. Give three to five choices when possible, or state the default.
+In gap.add's options, give each a label, detail, rationale and trade-off. Mark at most one
+recommended and explain it with recommendedBecause, so the answerer needs nothing else.
+An open question with no options is a lookup nobody investigated; investigate it, then ask.
+
+Say what the answer changes. Name the task, the slot or the criterion it unblocks. A question
+that blocks nothing is a note; put it in notes.
+
+Classify it by one question, and route it. If the answer is looked up, it is a needs-input, and
+say where it is looked up. If the answer is chosen, it is an open-question. If you have chosen
+and are proceeding, it is an assumption, and say what would falsify it. Then say who must act:
+human for a person in this workspace, agent for an agent, external for somebody outside.
+
+A human question reaches one person: the clarifier you name, else the reviewer of the project,
+else the reviewer of the team, else the account owner. When no reviewer is set, set one or name
+the right person: people.list gives the ids, project.reviewer.set and team.reviewer.set record a
+reviewer, and clarifier on gap.add routes this one question. Only a person who can write can be
+named, never an agent.
+
+Write it as a question, ending in a question mark, and give it enough words to carry all of the
+above: a question under six words is a heading. Ask once, in one batch, and never block waiting;
+proceed on the stated assumption and apply the answer when it arrives.
+
+Good: "Do we reject an unaddressable record, or quarantine it for a later pass? The mapper
+refuses today and nothing is lost; quarantine needs a table nobody has built. Default: reject,
+and name the column. Decides the second criterion on this task."
+
+Bad: "Should this be quarantined?"
+
+## Waiting for an answer
+
+gap.add on a needs-input or an open-question returns a watch URL beside the gap. It needs no
+bearer token, it answers with the gap's state and, once answered, the answer and who gave it,
+and repeated checks are served from the edge, so poll it rather than the task. Keep it in a
+shell variable and never print it: it is a secret for that one gap.
+
+Check it every 15 seconds. Run the loop detached if your harness can start a background command
+and wake you when it prints or exits. Otherwise give it a timeout and check back between steps.
+
+  until curl -sf "$WATCH" | grep -q '"state":"resolved"'; do sleep 15; done; curl -s "$WATCH"
+
+Expect the answer to reach you within the propagation the response states plus your interval,
+once a person has answered; how long a person takes to notice is outside the tracker. Give up
+when the response's expiry passes, and read the task again when you next claim it: every answer
+that arrived since your last call leads the read. With no shell, gap.get answers the same
+question under the normal read bucket.
+
+Do not stop working while you wait. Proceed on the assumption you stated, and when the answer
+arrives apply it, record what it changed, and move on.

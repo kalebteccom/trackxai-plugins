@@ -1,0 +1,88 @@
+# @trackxai/opencode
+
+Track work in trackxai from OpenCode. Version 0.1.0.
+
+The plugin adds the `trackxai` MCP server and the tracking guidance to OpenCode when it starts. It runs
+no command and opens no connection of its own.
+
+The `@trackxai` npm scope is owned, and `@trackxai/opencode` is not published yet. The package is marked
+private and is not on npm, so `opencode.json` cannot install it by name until the first publish is approved.
+The package is MIT licensed.
+
+## Install
+
+Until the package is published, use the block under "Without the plugin". To try the plugin from a built
+checkout, list its directory by path in `opencode.json`:
+
+```json
+{ "plugin": ["/path/to/this/directory"] }
+```
+
+The directory needs `@trackxai/agent-plugins` resolvable from its `node_modules`. OpenCode installs the
+package at the next start once it is published and you list it by name.
+
+## Sign in
+
+Run `opencode mcp auth trackxai` and approve the page that opens. OpenCode registers itself with
+trackxai, you pick a workspace on the consent page, and no token is pasted or written to a file. The plugin
+adds the server with no header, so this is the default.
+
+To use an Agent token instead, export `TRACKXAI_TOKEN` before OpenCode starts, with a token from the
+trackxai Agent tokens page. The plugin then sends it as a bearer header and never writes it to a file.
+OpenCode holds the resolved header in memory, and `opencode debug config` masks header values in current
+releases. Check that before sharing its output from an older one.
+
+## Without the plugin
+
+Paste this under the top level of `opencode.json`. It holds no secret, and `opencode mcp auth trackxai`
+signs in.
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "trackxai": {
+      "type": "remote",
+      "url": "https://trackxai.kalebtec.com/mcp"
+    }
+  }
+}
+```
+
+For a token instead, use this block. OpenCode fills `{env:TRACKXAI_TOKEN}` from the environment when it
+reads the file, and `oauth: false` keeps it from opening a sign-in if the server rejects the token.
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "trackxai": {
+      "type": "remote",
+      "url": "https://trackxai.kalebtec.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:TRACKXAI_TOKEN}"
+      },
+      "oauth": false
+    }
+  }
+}
+```
+
+The plugin skips itself when a `trackxai` server is already configured, from either block or from
+anything else, and leaves that entry as it is.
+
+## Self-hosted server
+
+Set `TRACKXAI_MCP_URL` to your server's `/mcp` address. The plugin accepts `https` addresses, and plain
+`http` only for localhost. Anything else registers nothing. In the block, change `url` instead.
+
+## Update
+
+Rebuild the package and restart OpenCode. Once it is published, pin a newer version in the `plugin` list and
+restart. The guidance opens with a `Plugin version:` line, and the block has nothing to update.
+
+## Uninstall
+
+1. Remove the plugin from the `plugin` list, and the `trackxai` entry from `mcp` if you added the block.
+2. Run `opencode mcp logout trackxai` to clear a sign-in made through OAuth.
+3. Unset `TRACKXAI_TOKEN`, and revoke the token on the Agent tokens page if you used one.
