@@ -3,7 +3,8 @@
 Track work in trackxai from OpenCode. Version 0.1.0.
 
 The plugin adds the `trackxai` MCP server and the tracking guidance to OpenCode when it starts. It runs
-no command and opens no connection of its own.
+no command. With `TRACKXAI_TOKEN` set it makes one request to the server it registered, to read the minimum
+plugin version, and logs one warning when this plugin is older. Without a token it makes no request.
 
 The `@trackxai` npm scope is owned, and `@trackxai/opencode` is not published yet. The package is marked
 private and is not on npm, so `opencode.json` cannot install it by name until the first publish is approved.
@@ -79,7 +80,8 @@ Set `TRACKXAI_MCP_URL` to your server's `/mcp` address. The plugin accepts `http
 ## Update
 
 Rebuild the package and restart OpenCode. Once it is published, pin a newer version in the `plugin` list and
-restart. The guidance opens with a `Plugin version:` line, and the block has nothing to update.
+restart. The guidance opens with a `Plugin version:` line, and the block has nothing to update. When the server
+asks for a newer plugin than this one, OpenCode's log carries one warning.
 
 ## Uninstall
 

@@ -4,6 +4,7 @@ import { LoginError } from "./login-error.js";
 import { verificationUrlOf } from "./server-url.js";
 /** A bearer in the `b64token` alphabet, so it is safe to write unquoted on one line of an env file. */
 const TOKEN_SHAPE = /^[A-Za-z0-9._~+/=-]{16,512}$/;
+export const isUsableToken = (value) => TOKEN_SHAPE.test(value);
 const codeBody = z.object({
     device_code: z.string().regex(/^[\x21-\x7e]{1,128}$/),
     user_code: z.string().regex(/^[0-9A-Za-z]{8}$/),

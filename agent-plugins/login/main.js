@@ -3,8 +3,10 @@ import { spawn } from "node:child_process";
 import { homedir, hostname } from "node:os";
 import { LoginError } from "./login-error.js";
 import { packageVersion } from "../package-root.js";
+import { parseLogoutOptions, LOGOUT_USAGE } from "./logout-options.js";
 import { browserAvailableIn, parseLoginOptions, USAGE } from "./options.js";
 import { runLogin } from "./run-login.js";
+import { runLogout } from "./run-logout.js";
 /**
  * The command file: the one place in this package that reads the process
  * environment and names the global `fetch`. Everything it calls takes both as
@@ -37,33 +39,47 @@ const sleep = (millis, signal) => new Promise((resolve, reject) => {
     };
     signal.addEventListener("abort", onAbort, { once: true });
 });
-const main = async (argv) => {
-    if (argv[0] !== "login") {
-        process.stderr.write(`${USAGE}\n`);
-        return 2;
-    }
+const say = (line) => void process.stdout.write(`${line}\n`);
+const login = async (argv) => {
     const abort = new AbortController();
     process.once("SIGINT", () => abort.abort());
+    const options = parseLoginOptions(argv, {
+        env,
+        defaultHostName: hostname(),
+        browserAvailable: browserAvailableIn(env, process.platform),
+    });
+    await runLogin(options, {
+        api: { http: (url, init) => fetch(url, init), userAgent: `trackxai-login/${packageVersion()}` },
+        clock: { now: () => Date.now(), sleep },
+        signal: abort.signal,
+        say,
+        openUrl,
+        env,
+        home: homedir(),
+        cwd: process.cwd(),
+    });
+};
+const logout = async (argv) => {
+    await runLogout(parseLogoutOptions(argv), {
+        api: { http: (url, init) => fetch(url, init), userAgent: `trackxai-logout/${packageVersion()}` },
+        say,
+        env,
+        home: homedir(),
+        cwd: process.cwd(),
+    });
+};
+const main = async (argv) => {
+    const command = argv[0];
+    if (command !== "login" && command !== "logout") {
+        process.stderr.write(`${USAGE}\n${LOGOUT_USAGE}\n`);
+        return 2;
+    }
     try {
-        const options = parseLoginOptions(argv.slice(1), {
-            env,
-            defaultHostName: hostname(),
-            browserAvailable: browserAvailableIn(env, process.platform),
-        });
-        await runLogin(options, {
-            api: { http: (url, init) => fetch(url, init), userAgent: `trackxai-login/${packageVersion()}` },
-            clock: { now: () => Date.now(), sleep },
-            signal: abort.signal,
-            say: (line) => process.stdout.write(`${line}\n`),
-            openUrl,
-            env,
-            home: homedir(),
-            cwd: process.cwd(),
-        });
+        await (command === "login" ? login : logout)(argv.slice(1));
         return 0;
     }
     catch (error) {
-        process.stderr.write(`trackxai login: ${error instanceof LoginError ? error.message : "failed unexpectedly."}\n`);
+        process.stderr.write(`trackxai ${command}: ${error instanceof LoginError ? error.message : "failed unexpectedly."}\n`);
         return 1;
     }
 };

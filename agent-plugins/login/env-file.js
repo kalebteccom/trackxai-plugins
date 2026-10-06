@@ -41,7 +41,7 @@ export const insideRepository = (dir, home) => {
             return false;
     }
 };
-const readIfPresent = async (path) => {
+export const readIfPresent = async (path) => {
     try {
         return await readFile(path, "utf8");
     }

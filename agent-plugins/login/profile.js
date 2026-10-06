@@ -14,6 +14,8 @@ export const assertHarnessId = (harness) => {
     if (!HARNESS_ID_PATTERN.test(harness) || harness.length > 32)
         throw new LoginError("--harness takes a lowercase name such as pi.");
 };
+/** Whether `login` and `logout` know this harness's profile directory without being told. */
+export const hasKnownProfile = (harness) => Object.hasOwn(KNOWN_PROFILES, harness);
 /** The active profile's directory: the flag, else the harness's own variable, else its default. */
 export const profileDirOf = (input) => {
     if (input.profileDirFlag !== undefined)

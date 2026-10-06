@@ -18,6 +18,7 @@ export declare const envFilePathOf: (profileDir: string) => string;
  * itself is not tested, because a dotfiles repository there is a person's own.
  */
 export declare const insideRepository: (dir: string, home: string | undefined) => boolean;
+export declare const readIfPresent: (path: string) => Promise<string | undefined>;
 export type PlanInput = {
     readonly profileDir: string;
     readonly harness: string;

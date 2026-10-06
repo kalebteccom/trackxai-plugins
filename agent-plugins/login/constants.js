@@ -2,6 +2,10 @@
 export const LOGIN_CLIENT_PREFIX = "trackxai-plugin";
 export const DEVICE_CODE_PATH = "/api/v1/device/code";
 export const DEVICE_TOKEN_PATH = "/api/v1/device/token";
+/** A device token withdraws itself here, by presenting itself as the bearer. */
+export const DEVICE_REVOKE_PATH = "/api/v1/device/revoke";
+/** RFC 7009 revocation for a token minted through MCP sign-in. It also takes the `client_id` the token was issued to. */
+export const MCP_REVOKE_PATH = "/revoke";
 /** The profile-scoped file the token lands in, beside the harness's own config. */
 export const PROFILE_ENV_FILE = "trackxai.env";
 /** First line of a file `trackxai login` wrote. Logout and a second login only touch files that carry it. */

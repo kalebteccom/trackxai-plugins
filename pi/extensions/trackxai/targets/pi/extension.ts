@@ -1,4 +1,5 @@
 import { SERVER_NAME } from "../../constants.js";
+import { isOlderVersion, minimumVersionIn, outdatedNotice } from "../../plugin-version.js";
 import { resolveConnection, type EnvMap } from "./credentials.js";
 import { hasConfiguredServer, mcpConfigPaths } from "./existing-server.js";
 import type { FetchLike } from "./guarded-fetch.js";
@@ -32,7 +33,8 @@ const say = (ctx: PiContext, message: string, level: PiLevel): void => {
  * appends the brief and the playbook to the system prompt. A profile that
  * already configures a server named `trackxai` gets one log line and no tools
  * and no network call. Any failure leaves Pi running with no trackxai tools
- * and one line that says why.
+ * and one line that says why. A server brief that names a minimum plugin
+ * version above this one gets one warning per session.
  */
 export const createTrackxaiExtension =
   (deps: ExtensionDeps) =>
@@ -40,6 +42,14 @@ export const createTrackxaiExtension =
     let client: TrackxaiClient | undefined;
     let registered = false;
     let promptFragment = "";
+    let warnedOutdated = false;
+
+    const warnWhenOutdated = (ctx: PiContext, instructions: string | undefined): void => {
+      const minimum = minimumVersionIn(instructions ?? "");
+      if (warnedOutdated || minimum === undefined || !isOlderVersion(deps.version, minimum)) return;
+      warnedOutdated = true;
+      say(ctx, outdatedNotice("Pi", deps.version, minimum), "warning");
+    };
 
     const start = async (ctx: PiContext): Promise<void> => {
       const resolution = resolveConnection({
@@ -83,6 +93,7 @@ export const createTrackxaiExtension =
           .filter((part): part is string => part !== undefined && part.trim() !== "")
           .join("\n\n");
         registered = true;
+        warnWhenOutdated(ctx, connected.instructions);
       } catch (error) {
         await client?.close().catch(() => undefined);
         client = undefined;
@@ -104,5 +115,6 @@ export const createTrackxaiExtension =
       client = undefined;
       registered = false;
       promptFragment = "";
+      warnedOutdated = false;
     });
   };

@@ -6,3 +6,7 @@ export { LoginError } from "./login-error.js";
 export { parseLoginOptions, type LoginOptions } from "./options.js";
 export { profileDirOf } from "./profile.js";
 export { runLogin, type LoginDeps } from "./run-login.js";
+export { commandsFor, HARNESS_COMMANDS, type HarnessCommands } from "./harness-commands.js";
+export { LOGOUT_USAGE, parseLogoutOptions, type LogoutOptions } from "./logout-options.js";
+export { revokeDeviceToken, revokeMcpToken, type RevokeOutcome } from "./revoke-api.js";
+export { runLogout, type LogoutDeps, type LogoutResult } from "./run-logout.js";

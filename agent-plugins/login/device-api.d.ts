@@ -19,6 +19,7 @@ export type CodeGrant = {
     readonly intervalSeconds: number;
     readonly expiresInSeconds: number;
 };
+export declare const isUsableToken: (value: string) => boolean;
 export type PollResult = {
     readonly kind: "token";
     readonly token: string;
