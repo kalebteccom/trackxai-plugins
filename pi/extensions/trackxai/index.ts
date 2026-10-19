@@ -14,9 +14,9 @@ const readFile = (path: string): string | undefined => {
 
 const playbook = readFile(fileURLToPath(new URL("../../prompt/playbook.md", import.meta.url))) ?? "";
 
-/** trackxai-pi 0.1.1. Pi calls the default export with its extension API. */
+/** trackxai-pi 0.1.2. Pi calls the default export with its extension API. */
 export default createTrackxaiExtension({
-  version: "0.1.1",
+  version: "0.1.2",
   defaultUrl: "https://trackxai.kalebtec.com/mcp",
   playbook,
   fetch: (url, init) => globalThis.fetch(url, init),

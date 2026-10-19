@@ -3,7 +3,7 @@ name: trackxai
 description: Track projects and tasks in trackxai.
 ---
 
-Plugin version: 0.1.1
+Plugin version: 0.1.2
 
 ## Writing a task a person can act on
 

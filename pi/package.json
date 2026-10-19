@@ -1,6 +1,6 @@
 {
   "name": "@trackxai/pi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Track work in trackxai from Pi: the trackxai tools, the tracking playbook and a skill.",
   "keywords": [
     "pi-package",

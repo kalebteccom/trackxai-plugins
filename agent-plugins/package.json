@@ -1,6 +1,6 @@
 {
   "name": "@trackxai/agent-plugins",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "The trackxai sign-in command and the registration helper the trackxai Pi and OpenCode plugins import.",
   "keywords": [

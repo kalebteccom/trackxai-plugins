@@ -3,7 +3,7 @@ name: "trackxai"
 description: "Track work in trackxai: claim, progress and complete tasks, record evidence, and write tasks and questions a person can act on. Use when working in a project tracked in trackxai, or when asked to create, update or close a task, epic or question there."
 ---
 
-Plugin version: 0.1.1
+Plugin version: 0.1.2
 
 ## Laying out the work
 

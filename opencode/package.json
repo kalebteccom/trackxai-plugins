@@ -1,6 +1,6 @@
 {
   "name": "@trackxai/opencode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "license": "MIT",
   "repository": {
@@ -26,6 +26,6 @@
     "mcp"
   ],
   "dependencies": {
-    "@trackxai/agent-plugins": "0.1.1"
+    "@trackxai/agent-plugins": "0.1.2"
   }
 }

@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { isOlderVersion, minimumVersionIn, outdatedNotice } from "@trackxai/agent-plugins/plugin-version";
 import { registerOnce } from "@trackxai/agent-plugins/register-once";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.2";
 const DEFAULT_URL = "https://trackxai.kalebtec.com/mcp";
 const URL_ENV_VAR = "TRACKXAI_MCP_URL";
 const TOKEN_ENV_VAR = "TRACKXAI_TOKEN";

@@ -4,6 +4,12 @@ Release notes for the trackxai plugins. This file is the source of the public re
 `CHANGELOG.md`, which the export copies as it is. A release adds its section here first, headed
 `## <version>`: the export fails when the section for the version being released is missing.
 
+## 0.1.2
+
+- The Claude Code plugin folder carries `.claude-plugin/icon.png`, a square 1024 px PNG, and the
+  manifest names its privacy policy in `privacyPolicyUrl`. The Claude plugin directory asked for
+  both. The README shows the icon under its title.
+
 ## 0.1.1
 
 - The Claude Code plugin folder carries a `README.md` with the install commands, what the plugin

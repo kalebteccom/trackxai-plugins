@@ -1,6 +1,6 @@
 # @trackxai/opencode
 
-Track work in trackxai from OpenCode. Version 0.1.1.
+Track work in trackxai from OpenCode. Version 0.1.2.
 
 The plugin adds the `trackxai` MCP server and the tracking guidance to OpenCode when it starts. It runs
 no command. With `TRACKXAI_TOKEN` set it makes one request to the server it registered, to read the minimum

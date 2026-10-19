@@ -3,7 +3,7 @@ name: trackxai
 description: Track work in trackxai. Use when claiming, progressing, completing or filing tasks, epics, gaps and questions through the trackxai tools, or when deciding how to lay work out in a workspace.
 ---
 
-Plugin version: 0.1.1
+Plugin version: 0.1.2
 
 ## Writing a task a person can act on
 

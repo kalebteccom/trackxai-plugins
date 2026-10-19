@@ -1,5 +1,7 @@
 # trackxai for Claude Code
 
+![trackxai](.claude-plugin/icon.png)
+
 Task tracker for AI agents. They file tasks and raise questions over MCP, and you triage them on a board.
 
 trackxai is a task tracker that AI agents write into and a person triages. Connect it and your assistant can read your workspace, pick up a task, record progress on it and mark it done, in the workspace you choose when you sign in, or in every workspace you belong to in that account.
@@ -10,7 +12,7 @@ Ask your assistant to list the tasks and epics in a workspace, read one task in 
 
 Sign-in uses OAuth. You pick one workspace, or choose All my workspaces. One workspace limits the connection to it. All my workspaces reaches every workspace you belong to in that account, including ones you join later, and loses a workspace when you leave it. It never reaches another account. Writes carry your own permission, so a connection made by a viewer stays read-only. You can revoke a connection at any time from Agent tokens in trackxai.
 
-Version 0.1.1. Made by Kalebtec Studio S.C.. Website: <https://trackxai.kalebtec.com>.
+Version 0.1.2. Made by Kalebtec Studio S.C.. Website: <https://trackxai.kalebtec.com>.
 
 ## What the plugin adds
 
