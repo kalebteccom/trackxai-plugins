@@ -15,6 +15,7 @@ export declare const PLUGIN_LICENSE = "MIT";
 export declare const LICENSE_FILE = "LICENSE";
 /** The npm scope. The scope is owned, and no package under it is published yet. */
 export declare const NPM_SCOPE = "@trackxai";
-/** The public repository the release pipeline will publish the artefacts to. */
+/** The public repository the release pipeline publishes the artefacts to, as `owner/name`. */
+export declare const PLUGINS_REPO = "kalebteccom/trackxai-plugins";
 export declare const PLUGINS_REPO_URL = "git+https://github.com/kalebteccom/trackxai-plugins.git";
 export declare const PLUGINS_REPO_HOMEPAGE = "https://github.com/kalebteccom/trackxai-plugins";

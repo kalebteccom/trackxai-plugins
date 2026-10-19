@@ -1,6 +1,6 @@
 {
   "name": "@trackxai/pi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Track work in trackxai from Pi: the trackxai tools, the tracking playbook and a skill.",
   "keywords": [
     "pi-package",
@@ -34,6 +34,6 @@
     ]
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.30.0"
+    "@modelcontextprotocol/sdk": "1.31.0"
   }
 }

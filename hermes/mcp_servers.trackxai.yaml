@@ -1,7 +1,15 @@
-# Merge this into config.yaml in the Hermes profile directory.
-# TRACKXAI_TOKEN belongs in the .env file beside it. Never write the token here.
+# Merge this into config.yaml in the Hermes profile directory, then sign in:
+#   hermes mcp login trackxai
 mcp_servers:
   trackxai:
     url: "https://trackxai.kalebtec.com/mcp"
-    headers:
-      Authorization: "Bearer ${TRACKXAI_TOKEN}"
+    auth: "oauth"
+#
+# Token fallback: replace the entry above with this one, and put
+# TRACKXAI_TOKEN in the .env file beside config.yaml. Never write the token here.
+#
+# mcp_servers:
+#   trackxai:
+#     url: "https://trackxai.kalebtec.com/mcp"
+#     headers:
+#       Authorization: "Bearer ${TRACKXAI_TOKEN}"

@@ -1,6 +1,6 @@
 # @trackxai/agent-plugins
 
-Version 0.1.0. The trackxai sign-in command and the registration helper the trackxai plugins for Pi and
+Version 0.1.1. The trackxai sign-in command and the registration helper the trackxai plugins for Pi and
 OpenCode import. It runs no code at install time.
 
 ```

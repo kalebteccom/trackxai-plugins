@@ -20,15 +20,23 @@ production". Add it with milestone.add; put tasks in with task.update's mileston
 live inside one epic. A dated checkpoint across epics is an initiative's target date.
 
 Task: one pull request or one verifiable unit, at most a day, with at least one acceptance
-criterion. Why: a claim and a completion should bracket one reviewable change.
+criterion, left at no-priority unless a person names one for task.create or task.update. Why: a
+claim and a completion should bracket one reviewable change, and attention already orders the list.
 
 Subtask: when a claimed task turns out larger, split it with parentTaskId on task.create, or
 task.parent.set on an existing task. Why: the original task keeps its address and its history.
 
+Placement: fix epic or backlog with task.move, labels with task.label.set. Why: the address stays.
+
+Lists: task.list answers at most 200 tasks a call. Follow its nextCursor, passed back as cursor with
+the same filters, until an answer ends without one, and never treat an answer marked truncated: true
+as the whole list. Why: a list cut short looks complete, and a decision taken on it misses the rest.
+
 ## Task, question or note
 
-Question: a gap on the task it blocks, raised with gap.add, classified, with options. Never a task
-titled "Decide X". Why: unlike a task, a gap routes to its answerer and never blocks the write.
+Question: a gap on the task it blocks, raised with gap.add, classified, with options, and with
+proposedDefault and proceedsAt when you will go ahead unanswered. Never a task titled "Decide X".
+Why: a gap routes to its answerer, never blocks the write, and tells you the answer.
 
 Requirements: context that outlives one task goes in the epic's goal. Each task that rests on an
 outside source cites it as a sources reference with ref.add. Why: every task in the epic is read

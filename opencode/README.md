@@ -1,26 +1,25 @@
 # @trackxai/opencode
 
-Track work in trackxai from OpenCode. Version 0.1.0.
+Track work in trackxai from OpenCode. Version 0.1.1.
 
 The plugin adds the `trackxai` MCP server and the tracking guidance to OpenCode when it starts. It runs
 no command. With `TRACKXAI_TOKEN` set it makes one request to the server it registered, to read the minimum
 plugin version, and logs one warning when this plugin is older. Without a token it makes no request.
 
-The `@trackxai` npm scope is owned, and `@trackxai/opencode` is not published yet. The package is marked
-private and is not on npm, so `opencode.json` cannot install it by name until the first publish is approved.
-The package is MIT licensed.
+The `@trackxai` npm scope is owned. Version 0.1.0 of `@trackxai/opencode` is published on npm, and the
+package is MIT licensed. The source manifest carries a private marker; the release pipeline removes it from
+the published package. The Hermes Agent plugin is not published yet.
 
 ## Install
 
-Until the package is published, use the block under "Without the plugin". To try the plugin from a built
-checkout, list its directory by path in `opencode.json`:
+Add the package name to the `plugin` list in `opencode.json`:
 
 ```json
-{ "plugin": ["/path/to/this/directory"] }
+{ "plugin": ["@trackxai/opencode"] }
 ```
 
-The directory needs `@trackxai/agent-plugins` resolvable from its `node_modules`. OpenCode installs the
-package at the next start once it is published and you list it by name.
+For a local checkout, list its built directory by path instead. The directory needs
+`@trackxai/agent-plugins` resolvable from its `node_modules`.
 
 ## Sign in
 
@@ -79,8 +78,8 @@ Set `TRACKXAI_MCP_URL` to your server's `/mcp` address. The plugin accepts `http
 
 ## Update
 
-Rebuild the package and restart OpenCode. Once it is published, pin a newer version in the `plugin` list and
-restart. The guidance opens with a `Plugin version:` line, and the block has nothing to update. When the server
+Restart OpenCode after changing the package version in the `plugin` list. The guidance opens with a
+`Plugin version:` line, and the block has nothing to update. When the server
 asks for a newer plugin than this one, OpenCode's log carries one warning.
 
 ## Uninstall

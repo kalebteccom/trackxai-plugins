@@ -3,7 +3,7 @@ name: trackxai
 description: Track projects and tasks in trackxai.
 ---
 
-Plugin version: 0.1.0
+Plugin version: 0.1.1
 
 ## Writing a task a person can act on
 
@@ -50,6 +50,9 @@ Offer the options or a default. Give three to five choices when possible, or sta
 In gap.add's options, give each a label, detail, rationale and trade-off. Mark at most one
 recommended and explain it with recommendedBecause, so the answerer needs nothing else.
 An open question with no options is a lookup nobody investigated; investigate it, then ask.
+Put what you will do if nobody answers in proposedDefault, an option id or a sentence, and when you
+will do it in proceedsAt, an ISO instant with a time zone, never in the question text. The answerer
+sees both, and the tracker never acts on them: going ahead stays your call.
 
 Say what the answer changes. Name the task, the slot or the criterion it unblocks. A question
 that blocks nothing is a note; put it in notes.
@@ -70,8 +73,9 @@ above: a question under six words is a heading. Ask once, in one batch, and neve
 proceed on the stated assumption and apply the answer when it arrives.
 
 Good: "Do we reject an unaddressable record, or quarantine it for a later pass? The mapper
-refuses today and nothing is lost; quarantine needs a table nobody has built. Default: reject,
-and name the column. Decides the second criterion on this task."
+refuses today and nothing is lost; quarantine needs a table nobody has built. Decides the second
+criterion on this task.", with proposedDefault "Reject it and name the column" and proceedsAt
+tomorrow at 09:00 UTC.
 
 Bad: "Should this be quarantined?"
 
@@ -90,8 +94,9 @@ and wake you when it prints or exits. Otherwise give it a timeout and check back
 Expect the answer to reach you within the propagation the response states plus your interval,
 once a person has answered; how long a person takes to notice is outside the tracker. Give up
 when the response's expiry passes, and read the task again when you next claim it: every answer
-that arrived since your last call leads the read. With no shell, gap.get answers the same
-question under the normal read bucket.
+that arrived since your last call leads the read. With no shell, each response to your token opens
+with 'ACME-12 gap 2 was answered by Rowin, answer: "Quarantine it"' per unread answer until gap.get
+or inbox.read; changes.since catches up, and a public HTTPS host can take the answered-gap webhook.
 
 Do not stop working while you wait. Proceed on the assumption you stated, and when the answer
 arrives apply it, record what it changed, and move on.
